@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
         Vector3 dir = Vector3.forward * _v + Vector3.right * _h;
         dir = Camera.main.transform.TransformDirection(dir);
         dir.y = 0;
-        if(dir != Vector3.zero)
+        if (dir != Vector3.zero)
         {
             transform.forward = dir;
         }
