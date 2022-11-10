@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(LineRenderer))]
-public class Weapon1 : MonoBehaviour
+public class ShootGun : MonoBehaviour
 {
     [SerializeField] Image _crosshair;
     [SerializeField] Transform _muzzle;
@@ -12,7 +11,6 @@ public class Weapon1 : MonoBehaviour
     [SerializeField] Color _tagetLockCrosshairColor;
     [SerializeField] float _shotRange;
     [SerializeField] LayerMask _enemyLayer;
-    [SerializeField] LineRenderer _bulletLine;
     [SerializeField] int _gunPower;
     [SerializeField] GameObject _muzzleEffect;
     [SerializeField] float _shootIntarval;
@@ -26,22 +24,6 @@ public class Weapon1 : MonoBehaviour
         Vector3 hitAngle = default;
         _timer += Time.deltaTime;
 
-        //for(int i = 0; i < 10; i++)
-        //{
-        //    float x = Random.Range(-3, 3);
-        //    float y = Random.Range(-3, 3);
-        //    Vector3 shootRange = new Vector3(transform.position.x + x, transform.position.y + y, 0);
-        //    Ray ray = Camera.main.ScreenPointToRay(shootRange);
-        //    if (Physics.Raycast(ray, out RaycastHit hit, _shotRange, _enemyLayer))
-        //    {
-        //        Debug.DrawRay(ray.origin,ray.direction);
-        //        Debug.Log("hit");
-        //        hitPosition = hit.point;
-        //        hitCollider = hit.collider;
-        //        hitAngle = hit.normal;
-        //    }
-        //}
-        
         if (_timer > _shootIntarval)
         {
             if (Input.GetButton("Fire1"))
@@ -61,36 +43,22 @@ public class Weapon1 : MonoBehaviour
                     }
                     if (hitCollider)
                     {
-                        BulletLine(hitPosition, hitAngle);
+                        HitEffect(hitPosition, hitAngle);
                         StartCoroutine(CrosshairColorChange());
-                        Hit(hitCollider);
+                        HitAction(hitCollider);
                     }
-                    //Debug.Log($"{i}‰ñ–Ú‚Ì”ÍˆÍ‚ÍX:{x}Y:{y}‚Å‚·");
                 }
-                //BulletLine(_muzzle.position);
-                //if (hitCollider)
-                //{
-                //    BulletLine(hitPosition, hitAngle);
-                //    StartCoroutine(CrosshairColorChange());
-                //    Hit(hitCollider);
-                //}
                 _timer = 0;
             }
         }
     }
 
-    void BulletLine(Vector3 endLine)
+    void HitEffect(Vector3 endLine, Vector3 hitAngle)
     {
-        Instantiate(_muzzleEffect, endLine, transform.rotation);
-    }
-
-    void BulletLine(Vector3 endLine, Vector3 hitAngle)
-    {
-        Debug.Log(Quaternion.FromToRotation(transform.forward, hitAngle));
         Instantiate(_muzzleEffect, endLine, Quaternion.FromToRotation(transform.forward, hitAngle));
     }
 
-    void Hit(Collider enemyCollider)
+    void HitAction(Collider enemyCollider)
     {
         var hitEnemy = enemyCollider.GetComponent<EnemyController>();
         hitEnemy.Damage(_gunPower);
