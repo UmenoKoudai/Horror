@@ -24,12 +24,11 @@ public class PlayerController : MonoBehaviour
         Vector3 dir = Vector3.forward * _v + Vector3.right * _h;
         dir = Camera.main.transform.TransformDirection(dir);
         dir.y = 0;
-        var mousePoint = Camera.main.ScreenToWorldPoint(_crosshair.transform.position);
-        transform.forward = mousePoint;
-        //if (dir != Vector3.zero)
-        //{
-        //    transform.forward = mousePoint;
-        //}
+        //var mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (dir != Vector3.zero)
+        {
+            transform.forward = dir;
+        }
         _rb.velocity = dir.normalized * _moveSpeed + _rb.velocity.y * Vector3.up;
     }
 }
