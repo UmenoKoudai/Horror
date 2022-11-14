@@ -8,6 +8,10 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] int _moveSpeed;
     [SerializeField] Image _crosshair;
+    [SerializeField] int _rayCastRange;
+    [SerializeField] LayerMask _weaponLayer;
+    [SerializeField] Text _getIcon;
+    [SerializeField] GameObject[] _weapons;
     Rigidbody _rb;
     float _h;
     float _v;
@@ -30,5 +34,25 @@ public class PlayerController : MonoBehaviour
             transform.forward = dir;
         }
         _rb.velocity = dir.normalized * _moveSpeed + _rb.velocity.y * Vector3.up;
+
+        Ray ray = Camera.main.ScreenPointToRay(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        if(Physics.Raycast(ray, out RaycastHit hit, _rayCastRange, _weaponLayer))
+        {
+            _getIcon.gameObject.SetActive(true);
+            _getIcon.text = $"{hit.collider.gameObject.name} F";
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                for(int i = 0; i < _weapons.Length; i++)
+                {
+                    _weapons[i].SetActive(false);
+                }
+                GameObject _getWeapon = GameObject.Find(hit.collider.gameObject.name);
+                _getWeapon.SetActive(true);
+            }
+        }
+        else
+        {
+            _getIcon.gameObject.SetActive(false);
+        }
     }
 }
