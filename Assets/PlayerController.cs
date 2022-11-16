@@ -50,8 +50,8 @@ public class PlayerController : MonoBehaviour
                 {
                     _weapons[i].SetActive(false);
                 }
-                Debug.Log(Array.FindIndex(_weapons,i => i == hit.collider.gameObject));
-                //_weapons[Array.IndexOf(_weapons, hit.collider.gameObject.name)].SetActive(true);
+                _weapons[hit.collider.GetComponent<WeaponID>()._id].SetActive(true);
+                //_weapons[Array.FindIndex(_weapons,i => i.name == hit.collider.gameObject.name)].SetActive(true);
             }
         }
         else
