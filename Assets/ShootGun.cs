@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShootGun : WeaponBase
+public class ShootGun : MonoBehaviour
 {
     [SerializeField] Image _crosshair;
     [SerializeField] Transform _muzzle;
@@ -13,44 +13,44 @@ public class ShootGun : WeaponBase
     [SerializeField] LayerMask _enemyLayer;
     [SerializeField] int _gunPower;
     [SerializeField] GameObject _muzzleEffect;
-    //[SerializeField] float _shootIntarval;
+    [SerializeField] float _shootIntarval;
     [SerializeField] int _randomRange;
-    //float _timer;
+    float _timer;
 
     void Update()
-    { 
-        //Vector3 hitPosition = _muzzle.transform.position + _muzzle.transform.forward * _shotRange;
-        //Collider hitCollider = default;
-        //Vector3 hitAngle = default;
-        //_timer += Time.deltaTime;
+    {
+        Vector3 hitPosition = _muzzle.transform.position + _muzzle.transform.forward * _shotRange;
+        Collider hitCollider = default;
+        Vector3 hitAngle = default;
+        _timer += Time.deltaTime;
 
-        //if (_timer > _shootIntarval)
-        //{
-        //    if (Input.GetButton("Fire1"))
-        //    {
-        //        for (int i = 0; i < 9; i++)
-        //        {
-        //            float x = Random.Range(-_randomRange, _randomRange);
-        //            float y = Random.Range(-_randomRange, _randomRange);
-        //            Vector3 shootRange = new Vector3(_crosshair.transform.position.x + x, _crosshair.transform.position.y + y, 0);
-        //            Ray ray = Camera.main.ScreenPointToRay(shootRange);
-        //            if (Physics.Raycast(ray, out RaycastHit hit, _shotRange, _enemyLayer))
-        //            {
-        //                Debug.DrawRay(ray.origin, ray.direction,Color.red);
-        //                hitPosition = hit.point;
-        //                hitCollider = hit.collider;
-        //                hitAngle = hit.normal;
-        //            }
-        //            if (hitCollider)
-        //            {
-        //                HitEffect(hitPosition, hitAngle);
-        //                StartCoroutine(CrosshairColorChange());
-        //                HitAction(hitCollider);
-        //            }
-        //        }
-        //        _timer = 0;
-        //    }
-        //}
+        if (_timer > _shootIntarval)
+        {
+            if (Input.GetButton("Fire1"))
+            {
+                for (int i = 0; i < 9; i++)
+                {
+                    float x = Random.Range(-_randomRange, _randomRange);
+                    float y = Random.Range(-_randomRange, _randomRange);
+                    Vector3 shootRange = new Vector3(_crosshair.transform.position.x + x, _crosshair.transform.position.y + y, 0);
+                    Ray ray = Camera.main.ScreenPointToRay(shootRange);
+                    if (Physics.Raycast(ray, out RaycastHit hit, _shotRange, _enemyLayer))
+                    {
+                        Debug.DrawRay(ray.origin, ray.direction, Color.red);
+                        hitPosition = hit.point;
+                        hitCollider = hit.collider;
+                        hitAngle = hit.normal;
+                    }
+                    if (hitCollider)
+                    {
+                        HitEffect(hitPosition, hitAngle);
+                        StartCoroutine(CrosshairColorChange());
+                        HitAction(hitCollider);
+                    }
+                }
+                _timer = 0;
+            }
+        }
     }
 
     void HitEffect(Vector3 endLine, Vector3 hitAngle)
@@ -71,30 +71,31 @@ public class ShootGun : WeaponBase
         _crosshair.color = _defaultCrosshairColor;
     }
 
-    public override void Action()
-    {
-        Vector3 hitPosition = _muzzle.transform.position + _muzzle.transform.forward * _shotRange;
-        Collider hitCollider = default;
-        Vector3 hitAngle = default;
-        for (int i = 0; i < 9; i++)
-        {
-            float x = Random.Range(-_randomRange, _randomRange);
-            float y = Random.Range(-_randomRange, _randomRange);
-            Vector3 shootRange = new Vector3(_crosshair.transform.position.x + x, _crosshair.transform.position.y + y, 0);
-            Ray ray = Camera.main.ScreenPointToRay(shootRange);
-            if (Physics.Raycast(ray, out RaycastHit hit, _shotRange, _enemyLayer))
-            {
-                Debug.DrawRay(ray.origin, ray.direction, Color.red);
-                hitPosition = hit.point;
-                hitCollider = hit.collider;
-                hitAngle = hit.normal;
-            }
-            if (hitCollider)
-            {
-                HitEffect(hitPosition, hitAngle);
-                StartCoroutine(CrosshairColorChange());
-                HitAction(hitCollider);
-            }
-        }
-    }
+    //public override void Action()
+    //{
+    //    Vector3 hitPosition = _muzzle.transform.position + _muzzle.transform.forward * _shotRange;
+    //    Collider hitCollider = default;
+    //    Vector3 hitAngle = default;
+    //    for (int i = 0; i < 9; i++)
+    //    {
+    //        float x = Random.Range(-_randomRange, _randomRange);
+    //        float y = Random.Range(-_randomRange, _randomRange);
+    //        Vector3 shootRange = new Vector3(_crosshair.transform.position.x + x, _crosshair.transform.position.y + y, 0);
+    //        Ray ray = Camera.main.ScreenPointToRay(shootRange);
+    //        if (Physics.Raycast(ray, out RaycastHit hit, _shotRange, _enemyLayer))
+    //        {
+    //            Debug.DrawRay(ray.origin, ray.direction, Color.red);
+    //            hitPosition = hit.point;
+    //            hitCollider = hit.collider;
+    //            hitAngle = hit.normal;
+    //        }
+    //        if (hitCollider)
+    //        {
+    //            Debug.Log("hit");
+    //            HitEffect(hitPosition, hitAngle);
+    //            StartCoroutine(CrosshairColorChange());
+    //            HitAction(hitCollider);
+    //        }
+    //    }
+    //}
 }

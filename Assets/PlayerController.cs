@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
+using System;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
@@ -13,6 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Text _getIcon;
     [SerializeField] GameObject[] _weapons;
     Rigidbody _rb;
+    int n;
     float _h;
     float _v;
     void Start()
@@ -35,19 +38,20 @@ public class PlayerController : MonoBehaviour
         }
         _rb.velocity = dir.normalized * _moveSpeed + _rb.velocity.y * Vector3.up;
 
-        Ray ray = Camera.main.ScreenPointToRay(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        if(Physics.Raycast(ray, out RaycastHit hit, _rayCastRange, _weaponLayer))
+        Ray ray = Camera.main.ScreenPointToRay(_crosshair.transform.position);
+        Debug.DrawRay(ray.origin, ray.direction);
+        if (Physics.Raycast(ray, out RaycastHit hit, _rayCastRange, _weaponLayer))
         {
             _getIcon.gameObject.SetActive(true);
             _getIcon.text = $"{hit.collider.gameObject.name} F";
             if (Input.GetKeyDown(KeyCode.F))
             {
-                for(int i = 0; i < _weapons.Length; i++)
+                for (int i = 0; i < _weapons.Length; i++)
                 {
                     _weapons[i].SetActive(false);
                 }
-                GameObject _getWeapon = GameObject.Find(hit.collider.gameObject.name);
-                _getWeapon.SetActive(true);
+                Debug.Log(Array.FindIndex(_weapons,i => i == hit.collider.gameObject));
+                //_weapons[Array.IndexOf(_weapons, hit.collider.gameObject.name)].SetActive(true);
             }
         }
         else
