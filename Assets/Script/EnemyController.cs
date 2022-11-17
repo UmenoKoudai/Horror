@@ -8,14 +8,17 @@ public class EnemyController : MonoBehaviour
     [SerializeField] int _hp;
     TargetController _target;
     NavMeshAgent _nav;
+    GameManager _gameManager;
     int _power;
     public int Power { get => _power; }
 
     private void Start()
     {
+        _gameManager = GameObject.FindObjectOfType<GameManager>();
         _nav = GetComponent<NavMeshAgent>();
         _target = GameObject.FindObjectOfType<TargetController>();
         _nav.SetDestination(_target.transform.position);
+        _gameManager.EnemyDestroy += EnemyDestroy;
 
     }
     void Update()
@@ -31,5 +34,10 @@ public class EnemyController : MonoBehaviour
     {
         Debug.Log($"ìGÇ…{damage}É_ÉÅÅ[ÉWó^Ç¶ÇΩ");
         _hp -= damage;
+    }
+
+    public void EnemyDestroy()
+    {
+        Destroy(gameObject);
     }
 }
