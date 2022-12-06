@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,14 +8,13 @@ using System;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] int _moveSpeed;
-    [SerializeField] Image _crosshair;
-    [SerializeField] int _rayCastRange;
-    [SerializeField] LayerMask _weaponLayer;
-    [SerializeField] Text _getIcon;
-    [SerializeField] GameObject[] _weapons;
+    [SerializeField,Header("プレイヤーの移動速度")] int _moveSpeed;
+    [SerializeField,Header("照準のイメージ")] Image _crosshair;
+    [SerializeField,Header("Rayの長さ")] int _rayCastRange;
+    [SerializeField,Header("取得するアイテムのレイヤー")] LayerMask _weaponLayer;
+    [SerializeField,Header("武器名のアイコンのイメージ")] Text _getIcon;
+    [SerializeField,Header("切り替えるための武器を格納")] GameObject[] _weapons;
     Rigidbody _rb;
-    int n;
     float _h;
     float _v;
     void Start()
@@ -27,33 +26,32 @@ public class PlayerController : MonoBehaviour
     {
         _h = Input.GetAxis("Horizontal");
         _v = Input.GetAxis("Vertical");
-        //Vector3 dir = new Vector3(_h, transform.position.y, _v);
+        //視点移動のスクリプトカメラ方向に視線を移動する
         Vector3 dir = Vector3.forward * _v + Vector3.right * _h;
         dir = Camera.main.transform.TransformDirection(dir);
         dir.y = 0;
-        //var mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //動いている時はカメラ方向に視線を向ける
         if (dir != Vector3.zero)
         {
             transform.forward = dir;
         }
         _rb.velocity = dir.normalized * _moveSpeed + _rb.velocity.y * Vector3.up;
 
+        //アイテムを取得するためのRayCast
         Ray ray = Camera.main.ScreenPointToRay(_crosshair.transform.position);
         Debug.DrawRay(ray.origin, ray.direction);
         if (Physics.Raycast(ray, out RaycastHit hit, _rayCastRange, _weaponLayer))
         {
+            //Rayが当たったら武器の名前を表示
             _getIcon.gameObject.SetActive(true);
             _getIcon.text = $"{hit.collider.gameObject.name} F";
+            //Rayが当たった状態でFボタンを押すと武器を拾う
             if (Input.GetKeyDown(KeyCode.F))
             {
-                for (int i = 0; i < _weapons.Length; i++)
-                {
-                    _weapons[i].SetActive(false);
-                }
-                _weapons[hit.collider.GetComponent<WeaponID>()._id].SetActive(true);
-                //_weapons[Array.FindIndex(_weapons,i => i.name == hit.collider.gameObject.name)].SetActive(true);
+                _weapons.WeaponChange(hit.collider.GetComponent<WeaponID>()._id);
             }
         }
+        //当たってないときはアイコンを非表示
         else
         {
             _getIcon.gameObject.SetActive(false);

@@ -26,24 +26,8 @@ public class GameManager : MonoBehaviour
     {
         _time -= Time.deltaTime;
         _timerText.text = $"{_time.ToString("f2")}";
-        //switch(_nowMove)
-        //{
-        //    case 0:
-        //        _moves[_nowMove].SetActive(true);
-        //        break;
-        //    case 1:
-        //        _moves[_nowMove - 1].SetActive(false);
-        //        _moves[_nowMove].SetActive(true);
-        //        break;
-        //    case 2:
-        //        _moves[_nowMove - 1].SetActive(false);
-        //        _moves[_nowMove].SetActive(true);
-        //        break;
-        //    case 3:
-        //        _moves[_nowMove - 1].SetActive(false);
-        //        _moves[_nowMove].SetActive(true);
-        //        break;
-        //}
+
+        //制限時間を過ぎたらWaveを進める
         if (_time < 0 && _nowMove < _moves.Length)
         {
             _nowMove++;
@@ -67,15 +51,18 @@ public class GameManager : MonoBehaviour
             }
             _time = _startTime;
         }
-        else if(_time < 0)
+        //最後のMaveまでクリアしたらステージクリア
+        else
         {
             Debug.Log("GameClea");
         }
+        //護衛対象が0になったらゲームオーバー
         if(FindObjectsOfType<TargetController>().Length == 0)
         {
             Debug.Log("GameOver");
         }
-        if(FindObjectsOfType<PlayerController>().Length == 0)
+        //プレイヤーが0になったらゲームオーバー
+        if (FindObjectsOfType<PlayerController>().Length == 0)
         {
             Debug.Log("GameOver");
         }

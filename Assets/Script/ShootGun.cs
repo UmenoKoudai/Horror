@@ -20,34 +20,6 @@ public class ShootGun : MonoBehaviour
     Vector3 _hitAngle = default;
     float _timer;
 
-    //private void Start()
-    //{
-    //    WeaponBase.IntarvalUpdate(_shootIntarval);
-    //}
-    //public override void Action()
-    //{
-    //    _hitPosition = _muzzle.transform.position + _muzzle.transform.forward * _shotRange;
-    //    for (int i = 0; i < 9; i++)
-    //    {
-    //        float x = Random.Range(-_randomRange, _randomRange);
-    //        float y = Random.Range(-_randomRange, _randomRange);
-    //        Vector3 shootRange = new Vector3(_crosshair.transform.position.x + x, _crosshair.transform.position.y + y, 0);
-    //        Ray ray = Camera.main.ScreenPointToRay(shootRange);
-    //        if (Physics.Raycast(ray, out RaycastHit hit, _shotRange, _enemyLayer))
-    //        {
-    //            Debug.DrawRay(ray.origin, ray.direction, Color.red);
-    //            _hitPosition = hit.point;
-    //            _hitCollider = hit.collider;
-    //            _hitAngle = hit.normal;
-    //        }
-    //        if (_hitCollider)
-    //        {
-    //            WeaponBase.HitEffect(_hitPosition, _hitAngle, transform.forward, _effect);
-    //            StartCoroutine(WeaponBase.CrosshairColorChange(_crosshair, _tagetLockCrosshairColor, _defaultCrosshairColor));
-    //            WeaponBase.HitAction(_hitCollider, _gunPower);
-    //        }
-    //    }
-    //}
     void Update()
     {
         _hitPosition = _muzzle.transform.position + _muzzle.transform.forward * _shotRange;
@@ -81,7 +53,6 @@ public class ShootGun : MonoBehaviour
             }
         }
     }
-
 
     void HitEffect(Vector3 endLine, Vector3 hitAngle)
     {
