@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
             //Rayが当たった状態でFボタンを押すと武器を拾う
             if (Input.GetKeyDown(KeyCode.F))
             {
-                _weapons.WeaponChange(hit.collider.GetComponent<WeaponID>()._id);
+                _weapons.WeaponChange(Array.FindIndex(_weapons, i => i.name == hit.collider.gameObject.name));
             }
         }
         //当たってないときはアイコンを非表示
