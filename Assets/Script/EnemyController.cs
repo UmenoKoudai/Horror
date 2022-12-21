@@ -15,9 +15,9 @@ public class EnemyController : MonoBehaviour
     private void Start()
     {
         _gameManager = GameObject.FindObjectOfType<GameManager>();
-        _nav = GetComponent<NavMeshAgent>();
-        _target = GameObject.FindObjectOfType<TargetController>();
-        _nav.SetDestination(_target.transform.position);
+        //_nav = GetComponent<NavMeshAgent>();
+        //_target = GameObject.FindObjectOfType<TargetController>();
+        //_nav.SetDestination(_target.transform.position);
         _gameManager.EnemyDestroy += EnemyDestroy;
 
     }

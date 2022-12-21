@@ -8,15 +8,16 @@ using System;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField,Header("プレイヤーの移動速度")] int _moveSpeed;
-    [SerializeField,Header("照準のイメージ")] Image _crosshair;
-    [SerializeField,Header("Rayの長さ")] int _rayCastRange;
-    [SerializeField,Header("取得するアイテムのレイヤー")] LayerMask _weaponLayer;
-    [SerializeField,Header("武器名のアイコンのイメージ")] Text _getIcon;
-    [SerializeField,Header("切り替えるための武器を格納")] GameObject[] _weapons;
+    [SerializeField, Header("プレイヤーの移動速度")] int _moveSpeed;
+    [SerializeField, Header("照準のイメージ")] Image _crosshair;
+    [SerializeField, Header("Rayの長さ")] int _rayCastRange;
+    [SerializeField, Header("取得するアイテムのレイヤー")] LayerMask _actionObjectLayer;
+    [SerializeField, Header("武器名のアイコンのイメージ")] Text _getIcon;
+    [SerializeField, Header("切り替えるための武器を格納")] GameObject[] _weapons;
     Rigidbody _rb;
     float _h;
     float _v;
+    public GameObject[] Weapons { get => _weapons; set => _weapons = value; }
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -40,15 +41,18 @@ public class PlayerController : MonoBehaviour
         //アイテムを取得するためのRayCast
         Ray ray = Camera.main.ScreenPointToRay(_crosshair.transform.position);
         Debug.DrawRay(ray.origin, ray.direction);
-        if (Physics.Raycast(ray, out RaycastHit hit, _rayCastRange, _weaponLayer))
+        if (Physics.Raycast(ray, out RaycastHit hit, _rayCastRange, _actionObjectLayer))
         {
             //Rayが当たったら武器の名前を表示
             _getIcon.gameObject.SetActive(true);
             _getIcon.text = $"{hit.collider.gameObject.name} F";
+            GameObject hitObject = hit.collider.gameObject;
             //Rayが当たった状態でFボタンを押すと武器を拾う
             if (Input.GetKeyDown(KeyCode.F))
             {
-                _weapons.WeaponChange(Array.FindIndex(_weapons, i => i.name == hit.collider.gameObject.name));
+                IAction action = hitObject.GetComponent<IAction>();
+                action.Action(hitObject.name);
+                //_weapons.WeaponChange(Array.FindIndex(_weapons, i => i.name == hit.collider.gameObject.name));
             }
         }
         //当たってないときはアイコンを非表示

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public abstract class WeaponBase : MonoBehaviour
 {
-    public static float _intarval;
+    [SerializeField]float _intarval;
     float _timer;
 
     public abstract void Action();
@@ -13,7 +13,6 @@ public abstract class WeaponBase : MonoBehaviour
     void Update()
     {
         _timer += Time.deltaTime;
-        Debug.Log(_timer);
         if (_intarval < _timer)
         {
             if (Input.GetButton("Fire1"))
@@ -23,11 +22,6 @@ public abstract class WeaponBase : MonoBehaviour
                 _timer = 0;
             }
         }
-    }
-
-    public static void IntarvalUpdate(float interval)
-    {
-        _intarval = interval;
     }
     /// <summary>
     /// 弾が当たった位置にエフェクトを自分に向けて発生させる
