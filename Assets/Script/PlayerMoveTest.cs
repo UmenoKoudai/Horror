@@ -20,12 +20,12 @@ public class PlayerMoveTest : MonoBehaviour
         _h = Input.GetAxis("Horizontal");
         _v = Input.GetAxis("Vertical");
         //Test1
-        //視点移動のスクリプトカメラ方向に視線を移動する
-        Vector3 cameraForward= Camera.main.transform.TransformDirection(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        cameraForward.y = 0;
-        //常にカメラ方向を向く
-        if(cameraForward.y > 0)
-        transform.forward = cameraForward;
+        ////視点移動のスクリプトカメラ方向に視線を移動する
+        //Vector3 cameraForward= Camera.main.transform.TransformDirection(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        //cameraForward.y = 0;
+        ////常にカメラ方向を向く
+        //if(cameraForward.y > 0)
+        //transform.forward = cameraForward;
 
         //Test2
         //視点移動のスクリプトカメラ方向に視線を移動する
@@ -38,6 +38,7 @@ public class PlayerMoveTest : MonoBehaviour
         {
             transform.forward = dirForward;
         }
-        _rb.velocity = dirForward.normalized * _moveSpeed + _rb.velocity.y * Vector3.up;
+        _rb.velocity = new Vector3(_h, 0, _v) * _moveSpeed + _rb.velocity.y * Vector3.up;
+        Debug.Log(_rb.velocity);
     }
 }

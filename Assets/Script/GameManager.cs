@@ -59,15 +59,15 @@ public class GameManager : MonoBehaviour
         //    Debug.Log("GameClea");
         //}
         //護衛対象が0になったらゲームオーバー
-        if (FindObjectsOfType<TargetController>().Length == 0)
-        {
-            Debug.Log("GameOver");
-        }
-        //プレイヤーが0になったらゲームオーバー
-        if (FindObjectsOfType<PlayerController>().Length == 0)
-        {
-            Debug.Log("GameOver");
-        }
+        //if (FindObjectsOfType<TargetController>().Length == 0)
+        //{
+        //    Debug.Log("GameOver");
+        //}
+        ////プレイヤーが0になったらゲームオーバー
+        //if (FindObjectsOfType<PlayerController>().Length == 0)
+        //{
+        //    Debug.Log("GameOver");
+        //}
     }
     public void AddScore(int score)
     {
