@@ -3,9 +3,9 @@ using System;
 
 public class WeaponAction : MonoBehaviour,IAction
 {
-    public void Action(string weaponName)
+    public void Action()
     {
         PlayerController _player = FindObjectOfType<PlayerController>();
-        _player.Weapons.WeaponChange(Array.FindIndex(_player.Weapons, i => i.name == weaponName));
+        _player.Weapons.WeaponChange(Array.FindIndex(_player.Weapons, i => i.name == _player.WeaponName));
     }
 }

@@ -15,16 +15,23 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Header("武器名のアイコンのイメージ")] Text _getIcon;
     [SerializeField, Header("切り替えるための武器を格納")] GameObject[] _weapons;
     Rigidbody _rb;
+    string _weaponName;
     float _h;
     float _v;
     public GameObject[] Weapons { get => _weapons; set => _weapons = value; }
+    public string WeaponName { get=> _weaponName; }
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        Cursor.visible = false;
     }
 
     void Update()
     {
+        if(Cursor.visible)
+        {
+            Cursor.visible = false;
+        }
         _h = Input.GetAxis("Horizontal");
         _v = Input.GetAxis("Vertical");
         //視点移動のスクリプトカメラ方向に視線を移動する
@@ -51,7 +58,8 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F))
             {
                 IAction action = hitObject.GetComponent<IAction>();
-                action.Action(hitObject.name);
+                _weaponName = hitObject.name;
+                action.Action();
                 //_weapons.WeaponChange(Array.FindIndex(_weapons, i => i.name == hit.collider.gameObject.name));
             }
         }

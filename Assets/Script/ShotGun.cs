@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShootGun : WeaponBase
+public class ShotGun : WeaponBase
 {
     [SerializeField, Tooltip("Æ€‚ÌƒCƒ‰ƒXƒg")] Image _crosshair;
     [SerializeField, Tooltip("’e‚ª”­Ë‚·‚éêŠ")] Transform _muzzle;

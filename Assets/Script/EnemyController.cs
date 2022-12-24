@@ -6,6 +6,8 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour
 {
     [SerializeField] int _hp;
+    [SerializeField] GameObject _effect;
+    [SerializeField] int _score;
     TargetController _target;
     NavMeshAgent _nav;
     GameManager _gameManager;
@@ -18,21 +20,21 @@ public class EnemyController : MonoBehaviour
         //_nav = GetComponent<NavMeshAgent>();
         //_target = GameObject.FindObjectOfType<TargetController>();
         //_nav.SetDestination(_target.transform.position);
-        _gameManager.EnemyDestroy += EnemyDestroy;
+        //_gameManager.EnemyDestroy += EnemyDestroy;
 
     }
     void Update()
     {
         if(_hp < 0)
         {
-            Debug.Log("エネミーを倒した");
+            _gameManager.AddScore(_score);
+            _effect.SetActive(true);
             Destroy(gameObject);
         }
     }
 
     public void Damage(int damage)
     {
-        Debug.Log($"敵に{damage}ダメージ与えた");
         _hp -= damage;
     }
 

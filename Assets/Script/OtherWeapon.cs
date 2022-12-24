@@ -23,7 +23,6 @@ public class OtherWeapon : WeaponBase
         Ray ray = Camera.main.ScreenPointToRay(_crosshair.transform.position);
         if (Physics.Raycast(ray, out RaycastHit hit, _shotRange, _enemyLayer))
         {
-            Debug.Log("hit");
             _hitPosition = hit.point;
             _hitCollider = hit.collider;
             _hitAngle = hit.normal;
@@ -32,8 +31,14 @@ public class OtherWeapon : WeaponBase
         if (_hitCollider)
         {
             HitEffect(_hitPosition, _hitAngle, transform.forward, _effect);
-            StartCoroutine(CrosshairColorChange(_crosshair, _tagetLockCrosshairColor, _defaultCrosshairColor));
+            StartCoroutine(CrosshairColorChange(_tagetLockCrosshairColor, _defaultCrosshairColor));
             HitAction(_hitCollider, _gunPower);
+        }
+        IEnumerator CrosshairColorChange(Color changeColor, Color defourtColor)
+        {
+            _crosshair.color = changeColor;
+            yield return new WaitForSeconds(0.3f);
+            _crosshair.color = defourtColor;
         }
     }
 }

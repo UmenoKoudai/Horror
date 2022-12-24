@@ -6,21 +6,35 @@ using UnityEngine.UI;
 public abstract class WeaponBase : MonoBehaviour
 {
     [SerializeField]float _intarval;
+    [SerializeField] int _maxBulletCount;
+    [SerializeField] Text _bulletCounttext;
     float _timer;
+    int _nowBulletCount;
+
+    public int NowBulletCount { get; }
 
     public abstract void Action();
 
+    private void Start()
+    {
+        _nowBulletCount = _maxBulletCount;
+    }
     void Update()
     {
         _timer += Time.deltaTime;
-        if (_intarval < _timer)
+        _bulletCounttext.text = $"{_nowBulletCount}/{_maxBulletCount}";
+        if (_intarval < _timer && _nowBulletCount != 0)
         {
             if (Input.GetButton("Fire1"))
             {
-                Debug.Log("shoot");
+                _nowBulletCount--;
                 Action();
                 _timer = 0;
             }
+        }
+        if(Input.GetKeyDown(KeyCode.R) && !Input.GetButton("Fire1"))
+        {
+            _nowBulletCount = _maxBulletCount;
         }
     }
     /// <summary>
