@@ -12,14 +12,16 @@ public class ShotGun : WeaponBase
     [SerializeField, Tooltip("射程距離")] float _shotRange;
     [SerializeField, Tooltip("敵のレイヤー")] LayerMask _enemyLayer;
     [SerializeField, Tooltip("弾の威力")] int _gunPower;
-    [SerializeField, Tooltip("マズルフラッシュ")] GameObject _effect;
+    [SerializeField, Tooltip("敵に当たった時のエッフェクト")] GameObject _hitEffect;
     [SerializeField, Tooltip("ショットガンの範囲")] int _randomRange;
+    [SerializeField, Tooltip("射撃時のエフェクト")] GameObject _effect;
     Vector3 _hitPosition;
     Collider _hitCollider = default;
     Vector3 _hitAngle = default;
 
     public override void Action()
     {
+        Instantiate(_effect, _muzzle.position, transform.rotation);
         _hitPosition = _muzzle.transform.position + _muzzle.transform.forward * _shotRange;
         for (int i = 0; i < 9; i++)
         {

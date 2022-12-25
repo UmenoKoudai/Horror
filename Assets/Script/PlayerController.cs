@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Header("取得するアイテムのレイヤー")] LayerMask _actionObjectLayer;
     [SerializeField, Header("武器名のアイコンのイメージ")] Text _getIcon;
     [SerializeField, Header("切り替えるための武器を格納")] GameObject[] _weapons;
+    Vector3 _camera;
+    [SerializeField] Transform _spine;
+    //[SerializeField] Transform _myCamera;
     Rigidbody _rb;
     Animator _anim;
     string _weaponName;
@@ -24,12 +27,16 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        _anim = GetComponent<Animator>();
+        _anim = GetComponentInChildren<Animator>();
         Cursor.visible = false;
+        _camera = Camera.main.transform.position;
+        
     }
 
     void Update()
     {
+        var spinePosition = _spine.transform.position;
+        //_spine.rotation = Quaternion.Euler(_spine.localEulerAngles.x, _spine.localEulerAngles.y, _spine.localEulerAngles.z + _myCamera.localEulerAngles.x);
         _anim.SetFloat("MoveSpeed", _rb.velocity.z);
         if (Cursor.visible)
         {
@@ -43,6 +50,7 @@ public class PlayerController : MonoBehaviour
         cameraForward.y = 0;
         //常にカメラ方向を向く
         transform.forward = cameraForward;
+        spinePosition.z = cameraForward.z;
 
         //Test2
         //視点移動のスクリプトカメラ方向に視線を移動する

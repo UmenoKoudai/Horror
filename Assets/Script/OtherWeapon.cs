@@ -12,13 +12,15 @@ public class OtherWeapon : WeaponBase
     [SerializeField, Tooltip("射程距離")] float _shotRange;
     [SerializeField, Tooltip("敵のレイヤー")] LayerMask _enemyLayer;
     [SerializeField, Tooltip("弾の威力")] int _gunPower;
-    [SerializeField, Tooltip("マズルフラッシュ")] GameObject _effect;
+    [SerializeField, Tooltip("敵に当たった時のエッフェクト")] GameObject _hitEffect;
+    [SerializeField, Tooltip("射撃時のエフェクト")]GameObject _effect;
     Vector3 _hitPosition;
     Collider _hitCollider = default;
     Vector3 _hitAngle = default;
 
     public override void Action()
     {
+        Instantiate(_effect, _muzzle.position, transform.rotation);
         _hitPosition = _muzzle.transform.position + _muzzle.transform.forward * _shotRange;
         Ray ray = Camera.main.ScreenPointToRay(_crosshair.transform.position);
         if (Physics.Raycast(ray, out RaycastHit hit, _shotRange, _enemyLayer))
@@ -30,7 +32,7 @@ public class OtherWeapon : WeaponBase
 
         if (_hitCollider)
         {
-            HitEffect(_hitPosition, _hitAngle, transform.forward, _effect);
+            HitEffect(_hitPosition, _hitAngle, transform.forward, _hitEffect);
             StartCoroutine(CrosshairColorChange(_tagetLockCrosshairColor, _defaultCrosshairColor));
             HitAction(_hitCollider, _gunPower);
         }
