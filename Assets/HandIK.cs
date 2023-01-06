@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HandIK : MonoBehaviour
 {
+    [SerializeField] GameObject _player;
     [SerializeField] Transform _leftTarget;
     [SerializeField] Transform _rightTarget;
     [SerializeField, Range(0f, 1f)] float _rightPositionWeight;
@@ -14,7 +15,7 @@ public class HandIK : MonoBehaviour
 
     void Start()
     {
-        _anim = GetComponent<Animator>();
+        _anim = _player.GetComponent<Animator>();
     }
     private void OnAnimatorIK(int layerIndex)
     {
