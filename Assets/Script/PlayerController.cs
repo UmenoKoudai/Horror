@@ -5,38 +5,34 @@ using UnityEngine.UI;
 using System.Linq;
 using System;
 
-//[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField, Header("プレイヤーの移動速度")] int _moveSpeed;
-    [SerializeField, Header("照準のイメージ")] Image _crosshair;
-    [SerializeField, Header("Rayの長さ")] int _rayCastRange;
-    [SerializeField, Header("取得するアイテムのレイヤー")] LayerMask _actionObjectLayer;
-    [SerializeField, Header("武器名のアイコンのイメージ")] Text _getIcon;
-    [SerializeField, Header("切り替えるための武器を格納")] GameObject[] _weapons;
-    Vector3 _camera;
-    [SerializeField] Transform _spine;
-    //[SerializeField] Transform _myCamera;
+    [SerializeField, Tooltip("照準のイメージ")] Image _crosshair;
+    [SerializeField, Tooltip("Rayの長さ")] int _rayCastRange;
+    [SerializeField, Tooltip("取得するアイテムのレイヤー")] LayerMask _actionObjectLayer;
+    [SerializeField, Tooltip("武器名のアイコンのイメージ")] Text _getIcon;
+    [SerializeField, Tooltip("切り替えるための武器を格納")] GameObject[] _weapons;
+    [SerializeField, Tooltip("ダッシュ時の移動速度")] int _dushSpeed;
+    [SerializeField, Tooltip("プレイヤーの移動速度")] int _defaultSpeed;
+    [SerializeField, Tooltip("足音のオブジェクト")] GameObject _footSoundObject;
     Rigidbody _rb;
     Animator _anim;
     string _weaponName;
     float _h;
     float _v;
+    int _moveSpeed;
     public GameObject[] Weapons { get => _weapons; set => _weapons = value; }
     public string WeaponName { get=> _weaponName; }
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _anim = GetComponentInChildren<Animator>();
-        Cursor.visible = false;
-        _camera = Camera.main.transform.position;
-        
+        Cursor.visible = false;   
     }
 
     void Update()
     {
-        var spinePosition = _spine.transform.position;
-        //_spine.rotation = Quaternion.Euler(_spine.localEulerAngles.x, _spine.localEulerAngles.y, _spine.localEulerAngles.z + _myCamera.localEulerAngles.x);
         _anim.SetFloat("MoveSpeed", _rb.velocity.z);
         if (Cursor.visible)
         {
@@ -61,6 +57,15 @@ public class PlayerController : MonoBehaviour
         if (dirForward != Vector3.zero && _v > 0 && _h == 0)
         {
             transform.forward = dirForward;
+        }
+        if(Input.GetButton("Fire4"))
+        {
+            _moveSpeed = _dushSpeed;
+            Instantiate(_footSoundObject, transform.position, transform.rotation);
+        }
+        else
+        {
+            _moveSpeed = _defaultSpeed;
         }
         _rb.velocity = dirForward.normalized * _moveSpeed + _rb.velocity.y * Vector3.up;
 
