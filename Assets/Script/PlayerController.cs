@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     string _weaponName;
     float _h;
     float _v;
-    int _moveSpeed;
+    int _moveSpeed = 10;
     public GameObject[] Weapons { get => _weapons; set => _weapons = value; }
     public string WeaponName { get=> _weaponName; }
     void Start()
@@ -33,41 +33,12 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        _anim.SetFloat("MoveSpeed", _rb.velocity.z);
+        
         if (Cursor.visible)
         {
             Cursor.visible = false;
         }
-        _h = Input.GetAxis("Horizontal");
-        _v = Input.GetAxis("Vertical");
-        //Test1
-        //視点移動のスクリプトカメラ方向に視線を移動する
-        Vector3 cameraForward = Camera.main.transform.forward;
-        cameraForward.y = 0;//ここかも
-        //常にカメラ方向を向く
-        transform.forward = cameraForward;
-        //spinePosition.z = cameraForward.z;
-
-        //Test2
-        //視点移動のスクリプトカメラ方向に視線を移動する
-        Vector3 dirForward = Vector3.forward * _v + Vector3.right * _h;
-        dirForward = Camera.main.transform.TransformDirection(dirForward);
-        dirForward.y = 0;
-        //動いている時はカメラ方向に視線を向ける
-        if (dirForward != Vector3.zero && _v > 0 && _h == 0)
-        {
-            transform.forward = dirForward;
-        }
-        if(Input.GetButton("Fire4"))
-        {
-            _moveSpeed = _dushSpeed;
-            Instantiate(_footSoundObject, transform.position, transform.rotation);
-        }
-        else
-        {
-            _moveSpeed = _defaultSpeed;
-        }
-        _rb.velocity = dirForward.normalized * _moveSpeed + _rb.velocity.y * Vector3.up;
+        
 
         //アイテムを取得するためのRayCast
         Ray ray = Camera.main.ScreenPointToRay(_crosshair.transform.position);
@@ -92,5 +63,39 @@ public class PlayerController : MonoBehaviour
         {
             _getIcon.gameObject.SetActive(false);
         }
+    }
+    private void FixedUpdate()
+    {
+        _h = Input.GetAxis("Horizontal");
+        _v = Input.GetAxis("Vertical");
+        _anim.SetFloat("MoveSpeed", _v);
+        //Test1
+        //視点移動のスクリプトカメラ方向に視線を移動する
+        Vector3 cameraForward = Camera.main.transform.forward;
+        cameraForward.y = 0;//ここかも
+        //常にカメラ方向を向く
+        transform.forward = cameraForward;
+        //spinePosition.z = cameraForward.z;
+
+        //Test2
+        //視点移動のスクリプトカメラ方向に視線を移動する
+        Vector3 dirForward = Vector3.forward * _v + Vector3.right * _h;
+        dirForward = Camera.main.transform.TransformDirection(dirForward);
+        dirForward.y = 0;
+        //動いている時はカメラ方向に視線を向ける
+        if (dirForward != Vector3.zero && _v > 0 && _h == 0)
+        {
+            transform.forward = dirForward;
+        }
+        //if(Input.GetButton("Fire4"))
+        //{
+        //    _moveSpeed = _dushSpeed;
+        //    Instantiate(_footSoundObject, transform.position, transform.rotation);
+        //}
+        //else
+        //{
+        //    _moveSpeed = _defaultSpeed;
+        //}
+        _rb.velocity = dirForward.normalized * _moveSpeed + _rb.velocity.y * Vector3.up;
     }
 }
