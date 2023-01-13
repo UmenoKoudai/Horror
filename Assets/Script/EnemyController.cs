@@ -27,14 +27,15 @@ public class EnemyController : MonoBehaviour
     }
     void Update()
     {
-        if(FindObjectsOfType<FootSound>().Length < 0)
+        if(FindObjectsOfType<FootSound>().Length <= 0)
         {
             int nowposition = _movePointCount % _movePoint.Length;
             float distance = Vector3.Distance(transform.position, _movePoint[nowposition].position);
-            if(distance > _stopingDistance)
+            Vector3 dir = (_movePoint[nowposition].position - transform.position).normalized;
+            _rb.velocity = dir * _moveSpeed;
+            if (distance > _stopingDistance)
             {
-                Vector3 dir = (_movePoint[nowposition].position - transform.position).normalized;
-                _rb.velocity = dir * _moveSpeed;
+                _movePointCount++;
             }
         }
         else
