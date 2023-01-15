@@ -31,9 +31,13 @@ public class EnemyController : MonoBehaviour
         {
             int nowposition = _movePointCount % _movePoint.Length;
             float distance = Vector3.Distance(transform.position, _movePoint[nowposition].position);
-            Vector3 dir = (_movePoint[nowposition].position - transform.position).normalized;
-            _rb.velocity = dir * _moveSpeed;
+            transform.LookAt(_movePoint[nowposition].position);
             if (distance > _stopingDistance)
+            {
+                Vector3 dir = (_movePoint[nowposition].position - transform.position).normalized;
+                _rb.velocity = dir * _moveSpeed;
+            }
+            else
             {
                 _movePointCount++;
             }
