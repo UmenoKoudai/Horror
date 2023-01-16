@@ -46,14 +46,14 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-            FootSound[] footSountPoint = GameObject.FindObjectsOfType<FootSound>();
-            var soundPoint = footSountPoint.OrderByDescending(i => i).ToArray();
-            float distance = Vector3.Distance(transform.position, soundPoint[0].transform.position);
-            if(distance > _stopingDistance)
-            {
-                Vector3 dir = (soundPoint[0].transform.position - transform.position).normalized;
-                _rb.velocity = dir * _moveSpeed;
-            }
+            var footSountPoint = FindObjectsOfType<FootSound>();
+            var soundPoint = footSountPoint.OrderByDescending(i => i.transform.position).ToArray(); //←ここが問題何をソートするかわからないって言ってる？
+            //float distance = Vector3.Distance(transform.position, soundPoint[0].transform.position);
+            //if(distance > _stopingDistance)
+            //{
+            //    Vector3 dir = (soundPoint[0].transform.position - transform.position).normalized;
+            //    _rb.velocity = dir * _moveSpeed;
+            //}
         }
         if(_hp < 0)
         {
