@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
     {
         _h = Input.GetAxis("Horizontal");
         _v = Input.GetAxis("Vertical");
-        _anim.SetFloat("MoveSpeed", _v);
+        _anim.SetFloat("MoveSpeed", _rb.velocity.magnitude);
         //Test1
         //視点移動のスクリプトカメラ方向に視線を移動する
         Vector3 cameraForward = Camera.main.transform.forward;

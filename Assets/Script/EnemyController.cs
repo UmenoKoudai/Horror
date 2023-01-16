@@ -18,15 +18,17 @@ public class EnemyController : MonoBehaviour
     int _power;
     Rigidbody _rb;
     public int Power { get => _power; }
+    Animator _anim;
 
     private void Start()
     {
         _gameManager = GameObject.FindObjectOfType<GameManager>();
         _rb = GetComponent<Rigidbody>();
-
+        _anim = GetComponent<Animator>();
     }
     void Update()
     {
+        _anim.SetFloat("MoveSpeed", _rb.velocity.magnitude);
         if(FindObjectsOfType<FootSound>().Length <= 0)
         {
             int nowposition = _movePointCount % _movePoint.Length;
