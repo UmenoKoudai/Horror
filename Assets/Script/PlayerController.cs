@@ -87,15 +87,15 @@ public class PlayerController : MonoBehaviour
         {
             transform.forward = dirForward;
         }
-        //if(Input.GetButton("Fire4"))
-        //{
-        //    _moveSpeed = _dushSpeed;
-        //    Instantiate(_footSoundObject, transform.position, transform.rotation);
-        //}
-        //else
-        //{
-        //    _moveSpeed = _defaultSpeed;
-        //}
+        if (Input.GetButton("Fire4"))
+        {
+            _moveSpeed = _dushSpeed;
+            Instantiate(_footSoundObject, transform.position, transform.rotation);
+        }
+        else
+        {
+            _moveSpeed = _defaultSpeed;
+        }
         _rb.velocity = dirForward.normalized * _moveSpeed + _rb.velocity.y * Vector3.up;
     }
 }

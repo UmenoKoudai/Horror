@@ -33,9 +33,9 @@ public class EnemyController : MonoBehaviour
         {
             int nowposition = _movePointCount % _movePoint.Length;
             float distance = Vector3.Distance(transform.position, _movePoint[nowposition].position);
-            transform.LookAt(_movePoint[nowposition].position);
             if (distance > _stopingDistance)
             {
+                transform.LookAt(_movePoint[nowposition].position);
                 Vector3 dir = (_movePoint[nowposition].position - transform.position).normalized;
                 _rb.velocity = dir * _moveSpeed;
             }
@@ -46,14 +46,15 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-            var footSountPoint = FindObjectsOfType<FootSound>();
-            var soundPoint = footSountPoint.OrderByDescending(i => i.transform.position).ToArray(); //←ここが問題何をソートするかわからないって言ってる？
-            //float distance = Vector3.Distance(transform.position, soundPoint[0].transform.position);
-            //if(distance > _stopingDistance)
-            //{
-            //    Vector3 dir = (soundPoint[0].transform.position - transform.position).normalized;
-            //    _rb.velocity = dir * _moveSpeed;
-            //}
+            var footSountPoint = GameObject.FindGameObjectsWithTag("FootSound");
+            //var soundPoint = footSountPoint.OrderByDescending(i => i).ToArray(); //←ここが問題何をソートするかわからないって言ってる？
+            float distance = Vector3.Distance(transform.position, footSountPoint[0].transform.position);
+            if (distance > _stopingDistance)
+            {
+                transform.LookAt(footSountPoint[footSountPoint.Length - 1].transform.position);
+                Vector3 dir = (footSountPoint[footSountPoint.Length - 1].transform.position - transform.position).normalized;
+                _rb.velocity = dir * _moveSpeed;
+            }
         }
         if(_hp < 0)
         {
