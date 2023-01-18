@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] Transform[] _movePoint;
     [SerializeField] float _stopingDistance;
     [SerializeField] int _moveSpeed;
+    [SerializeField] float _discoverDistance;
     int _movePointCount;
     GameManager _gameManager;
     int _power;
@@ -29,7 +30,17 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         _anim.SetFloat("MoveSpeed", _rb.velocity.magnitude);
-        if(FindObjectsOfType<FootSound>().Length <= 0)
+        if(_hp < 0)
+        {
+            _gameManager.AddScore(_score);
+            _effect.SetActive(true);
+            Destroy(gameObject);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (FindObjectsOfType<FootSound>().Length <= 0)
         {
             int nowposition = _movePointCount % _movePoint.Length;
             float distance = Vector3.Distance(transform.position, _movePoint[nowposition].position);
@@ -55,12 +66,6 @@ public class EnemyController : MonoBehaviour
                 Vector3 dir = (footSountPoint[footSountPoint.Length - 1].transform.position - transform.position).normalized;
                 _rb.velocity = dir * _moveSpeed;
             }
-        }
-        if(_hp < 0)
-        {
-            _gameManager.AddScore(_score);
-            _effect.SetActive(true);
-            Destroy(gameObject);
         }
     }
 
