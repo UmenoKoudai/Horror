@@ -68,10 +68,6 @@ public class PlayerController : MonoBehaviour
     {
         _h = Input.GetAxis("Horizontal");
         _v = Input.GetAxis("Vertical");
-        _anim.SetFloat("MoveSpeed", _rb.velocity.magnitude);
-        Quaternion playerRotation = transform.rotation;
-        playerRotation.x = 0;
-        transform.rotation = playerRotation;
         //Test1
         //視点移動のスクリプトカメラ方向に視線を移動する
         Vector3 cameraForward = Camera.main.transform.forward;
@@ -92,11 +88,13 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetButton("Fire4"))
         {
+            _anim.SetFloat("Run", _rb.velocity.magnitude);
             _moveSpeed = _dushSpeed;
             Instantiate(_footSoundObject, transform.position, transform.rotation);
         }
         else
         {
+            _anim.SetFloat("Work", _rb.velocity.magnitude);
             _moveSpeed = _defaultSpeed;
         }
         _rb.velocity = dirForward.normalized * _moveSpeed + _rb.velocity.y * Vector3.up;
