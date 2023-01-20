@@ -7,13 +7,13 @@ using System.Linq;
 [RequireComponent(typeof(Rigidbody))]
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] int _hp;
-    [SerializeField] GameObject _effect;
-    [SerializeField] int _score;
-    [SerializeField] Transform[] _movePoint;
-    [SerializeField] float _stopingDistance;
-    [SerializeField] int _moveSpeed;
-    [SerializeField] float _discoverDistance;
+    [SerializeField, Tooltip("エネミーの体力")] int _hp;
+    [SerializeField, Tooltip("体力が0になった時に出すオブジェクト")] GameObject _effect;
+    [SerializeField, Tooltip("エネミーを倒したときに得られるスコア")] int _score;
+    [SerializeField, Tooltip("プレイヤーが動いていないときに巡回する場所")] Transform[] _movePoint;
+    [SerializeField, Tooltip("目的地にどれだけ近づくか")] float _stopingDistance;
+    [SerializeField, Tooltip("エネミーの移動速度")] int _moveSpeed;
+    PlayerController _player;
     int _movePointCount;
     GameManager _gameManager;
     int _power;
@@ -26,6 +26,7 @@ public class EnemyController : MonoBehaviour
         _gameManager = GameObject.FindObjectOfType<GameManager>();
         _rb = GetComponent<Rigidbody>();
         _anim = GetComponent<Animator>();
+        _player = GameObject.FindObjectOfType<PlayerController>();
     }
     void Update()
     {
@@ -40,6 +41,7 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        float playerDisyance = Vector3.Distance(transform.position, _player.transform.position);
         if (FindObjectsOfType<FootSound>().Length <= 0)
         {
             int nowposition = _movePointCount % _movePoint.Length;

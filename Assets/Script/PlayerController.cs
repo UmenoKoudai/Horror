@@ -40,7 +40,6 @@ public class PlayerController : MonoBehaviour
         }
 
         _anim.SetFloat("Speed", _rb.velocity.magnitude);
-        Debug.Log(_rb.velocity.magnitude);
         //アイテムを取得するためのRayCast
         Ray ray = Camera.main.ScreenPointToRay(_crosshair.transform.position);
         Debug.DrawRay(ray.origin, ray.direction);
