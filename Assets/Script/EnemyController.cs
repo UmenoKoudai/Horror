@@ -13,13 +13,15 @@ public class EnemyController : MonoBehaviour
     [SerializeField, Tooltip("プレイヤーが動いていないときに巡回する場所")] Transform[] _movePoint;
     [SerializeField, Tooltip("目的地にどれだけ近づくか")] float _stopingDistance;
     [SerializeField, Tooltip("エネミーの移動速度")] int _moveSpeed;
+    [SerializeField, Tooltip("ゾンビが音に気付く距離")] float _discoverArea;
     PlayerController _player;
-    int _movePointCount;
     GameManager _gameManager;
-    int _power;
-    Rigidbody _rb;
-    public int Power { get => _power; }
     Animator _anim;
+    Rigidbody _rb;
+    int _movePointCount;
+    int _power;
+    bool _freeMove = true;
+    public int Power { get => _power; }
 
     private void Start()
     {
@@ -42,31 +44,35 @@ public class EnemyController : MonoBehaviour
     private void FixedUpdate()
     {
         float playerDisyance = Vector3.Distance(transform.position, _player.transform.position);
-        if (FindObjectsOfType<FootSound>().Length <= 0)
+        if (playerDisyance < _discoverArea)
         {
-            int nowposition = _movePointCount % _movePoint.Length;
-            float distance = Vector3.Distance(transform.position, _movePoint[nowposition].position);
-            if (distance > _stopingDistance)
+            if (FindObjectsOfType<FootSound>().Length <= 0)
             {
-                transform.LookAt(_movePoint[nowposition].position);
-                Vector3 dir = (_movePoint[nowposition].position - transform.position).normalized;
-                _rb.velocity = dir * _moveSpeed;
+                int nowposition = _movePointCount % _movePoint.Length;
+                float distance = Vector3.Distance(transform.position, _movePoint[nowposition].position);
+                if (distance > _stopingDistance)
+                {
+                    transform.LookAt(_movePoint[nowposition].position);
+                    Vector3 dir = (_movePoint[nowposition].position - transform.position).normalized;
+                    _rb.velocity = dir * _moveSpeed;
+                }
+                else
+                {
+                    _movePointCount++;
+                }
             }
             else
             {
-                _movePointCount++;
-            }
-        }
-        else
-        {
-            var footSountPoint = GameObject.FindGameObjectsWithTag("FootSound");
-            //var soundPoint = footSountPoint.OrderByDescending(i => i).ToArray(); //←ここが問題何をソートするかわからないって言ってる？
-            float distance = Vector3.Distance(transform.position, footSountPoint[0].transform.position);
-            if (distance > _stopingDistance)
-            {
-                transform.LookAt(footSountPoint[footSountPoint.Length - 1].transform.position);
-                Vector3 dir = (footSountPoint[footSountPoint.Length - 1].transform.position - transform.position).normalized;
-                _rb.velocity = dir * _moveSpeed;
+
+                var footSountPoint = GameObject.FindGameObjectsWithTag("FootSound");
+                //var soundPoint = footSountPoint.OrderByDescending(i => i).ToArray(); //←ここが問題何をソートするかわからないって言ってる？
+                float distance = Vector3.Distance(transform.position, footSountPoint[0].transform.position);
+                if (distance > _stopingDistance)
+                {
+                    transform.LookAt(footSountPoint[footSountPoint.Length - 1].transform.position);
+                    Vector3 dir = (footSountPoint[footSountPoint.Length - 1].transform.position - transform.position).normalized;
+                    _rb.velocity = dir * _moveSpeed;
+                }
             }
         }
     }
