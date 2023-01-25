@@ -8,7 +8,6 @@ using System.Linq;
 public class EnemyController : MonoBehaviour
 {
     [SerializeField, Tooltip("エネミーの体力")] int _hp;
-    [SerializeField, Tooltip("体力が0になった時に出すオブジェクト")] GameObject _effect;
     [SerializeField, Tooltip("エネミーを倒したときに得られるスコア")] int _score;
     [SerializeField, Tooltip("プレイヤーが動いていないときに巡回する場所")] Transform[] _movePoint;
     [SerializeField, Tooltip("目的地にどれだけ近づくか")] float _stopingDistance;
@@ -35,8 +34,9 @@ public class EnemyController : MonoBehaviour
         _anim.SetFloat("MoveSpeed", _rb.velocity.magnitude);
         if(_hp < 0)
         {
+            GameObject ragDoll = (GameObject)Resources.Load("RagDollZombi");
+            Instantiate(ragDoll, transform.position, transform.rotation);
             _gameManager.AddScore(_score);
-            _effect.SetActive(true);
             Destroy(gameObject);
         }
     }

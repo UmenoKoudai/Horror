@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class AutoDestroy : MonoBehaviour
 {
+    [SerializeField, Tooltip("オブジェクトを破壊するまでの時間")] float _destroyTime;
     void Start()
     {
-        Destroy(gameObject, 0.5f);
+        Destroy(gameObject, _destroyTime);
     }
 }
