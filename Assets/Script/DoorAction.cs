@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DoorAction : MonoBehaviour, IAction
 {
+    [SerializeField] string _open;
+    [SerializeField] string _close;
     Animator _anim;
     bool _isDoorOpen;
 
@@ -16,11 +18,11 @@ public class DoorAction : MonoBehaviour, IAction
     {
         if(!_isDoorOpen)
         {
-            _anim.Play("Open");
+            _anim.Play(_open);
         }
         else
         {
-            _anim.Play("Close");
+            _anim.Play(_close);
         }
         _isDoorOpen = !_isDoorOpen;
     }
