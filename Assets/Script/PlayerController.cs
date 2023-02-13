@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetButton("Fire4"))
         {
-            AudioController.Instance.SePlay(SelectClip.Run, 1f);
+            AudioController.Instance.SePlay(SelectClip.Run, 0.2f);
             _moveSpeed = _dushSpeed;
             Instantiate(_footSoundObject, transform.position, transform.rotation);
         }
@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
         {
             if(dirForward != Vector3.zero)
             {
-                AudioController.Instance.SePlay(SelectClip.Walk, 1f);
+                AudioController.Instance.SePlay(SelectClip.Walk, 0.5f);
             }
             _moveSpeed = _defaultSpeed;
         }

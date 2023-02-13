@@ -34,6 +34,7 @@ public abstract class WeaponBase : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.R) && !Input.GetButton("Fire1"))
         {
+            AudioController.Instance.SePlay(SelectClip.Reload, 0.5f);
             _nowBulletCount = _maxBulletCount;
         }
     }
