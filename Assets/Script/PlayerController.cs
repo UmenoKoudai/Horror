@@ -18,12 +18,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Tooltip("足音のオブジェクト")] GameObject _footSoundObject;
     Rigidbody _rb;
     Animator _anim;
-    string _weaponName;
+    GameObject _hitObject;
     float _h;
     float _v;
     int _moveSpeed = 10;
     public GameObject[] Weapons { get => _weapons; set => _weapons = value; }
-    public string WeaponName { get=> _weaponName; }
+    public GameObject HitObject { get=> _hitObject; }
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F))
             {
                 IAction action = hitObject.GetComponent<IAction>();
-                _weaponName = hitObject.name;
+                _hitObject = hitObject;
                 action.Action();
                 //_weapons.WeaponChange(Array.FindIndex(_weapons, i => i.name == hit.collider.gameObject.name));
             }
