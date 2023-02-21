@@ -16,9 +16,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Tooltip("ダッシュ時の移動速度")] int _dushSpeed;
     [SerializeField, Tooltip("プレイヤーの移動速度")] int _defaultSpeed;
     [SerializeField, Tooltip("足音のオブジェクト")] GameObject _footSoundObject;
+    [SerializeField] GameObject _aimeScope;
     Rigidbody _rb;
     Animator _anim;
     GameObject _hitObject;
+    bool _onAime;
     float _h;
     float _v;
     int _moveSpeed = 10;
@@ -62,6 +64,17 @@ public class PlayerController : MonoBehaviour
         else
         {
             _getIcon.gameObject.SetActive(false);
+        }
+        if(Input.GetButtonDown("Fire2"))
+        {
+            _onAime = !_onAime;
+            _aimeScope.SetActive(_onAime);
+        }
+        if(Input.GetButtonUp("Fire2"))
+
+        {
+            _onAime = !_onAime;
+            _aimeScope.SetActive(_onAime);
         }
     }
     private void FixedUpdate()
