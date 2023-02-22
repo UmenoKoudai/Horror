@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using System;
+using Cinemachine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
@@ -16,7 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Tooltip("ダッシュ時の移動速度")] int _dushSpeed;
     [SerializeField, Tooltip("プレイヤーの移動速度")] int _defaultSpeed;
     [SerializeField, Tooltip("足音のオブジェクト")] GameObject _footSoundObject;
-    [SerializeField] GameObject _aimeScope;
+    [SerializeField] CinemachineVirtualCamera _aimeScope;
     Rigidbody _rb;
     Animator _anim;
     GameObject _hitObject;
@@ -41,7 +42,7 @@ public class PlayerController : MonoBehaviour
             Cursor.visible = false;
         }
 
-        _anim.SetFloat("Speed", _rb.velocity.magnitude);
+        //_anim.SetFloat("Speed", _rb.velocity.magnitude);
         //アイテムを取得するためのRayCast
         Ray ray = Camera.main.ScreenPointToRay(_crosshair.transform.position);
         Debug.DrawRay(ray.origin, ray.direction);
@@ -67,14 +68,12 @@ public class PlayerController : MonoBehaviour
         }
         if(Input.GetButtonDown("Fire2"))
         {
-            _onAime = !_onAime;
-            _aimeScope.SetActive(_onAime);
+            _aimeScope.Priority = 100;
         }
         if(Input.GetButtonUp("Fire2"))
 
         {
-            _onAime = !_onAime;
-            _aimeScope.SetActive(_onAime);
+            _aimeScope.Priority = 0;
         }
     }
     private void FixedUpdate()
