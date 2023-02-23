@@ -1,13 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
-using System;
 using Cinemachine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : SingletonMonoBehaviour<PlayerController>
 {
     [SerializeField, Tooltip("照準のイメージ")] Image _crosshair;
     [SerializeField, Tooltip("Rayの長さ")] int _rayCastRange;
@@ -21,7 +17,6 @@ public class PlayerController : MonoBehaviour
     Rigidbody _rb;
     Animator _anim;
     GameObject _hitObject;
-    bool _onAime;
     float _h;
     float _v;
     int _moveSpeed = 10;
@@ -66,21 +61,21 @@ public class PlayerController : MonoBehaviour
         {
             _getIcon.gameObject.SetActive(false);
         }
-        if(Input.GetButtonDown("Fire2"))
-        {
-            _aimeScope.Priority = 100;
-        }
-        if(Input.GetButtonUp("Fire2"))
+        //if(Input.GetButtonDown("Fire2"))
+        //{
+        //    _aimeScope.Priority = 100;
+        //}
+        //if(Input.GetButtonUp("Fire2"))
 
-        {
-            _aimeScope.Priority = 0;
-        }
+        //{
+        //    _aimeScope.Priority = 0;
+        //}
     }
     private void FixedUpdate()
     {
         _h = Input.GetAxis("Horizontal");
         _v = Input.GetAxis("Vertical");
-        //_anim.SetFloat("Speed", _rb.velocity.magnitude);
+        _anim.SetFloat("Speed", _rb.velocity.magnitude);
         //Test1
         //視点移動のスクリプトカメラ方向に視線を移動する
         Vector3 cameraForward = Camera.main.transform.forward;

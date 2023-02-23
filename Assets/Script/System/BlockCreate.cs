@@ -13,7 +13,7 @@ public class BlockCreate : MonoBehaviour
 
     void Update()
     {
-        if(FindObjectsOfType<TargetController>().Length < 30)
+        if(FindObjectsOfType<EnemyBase>().Length < 30)
         {
             float x = Random.Range(_boxCollider.size.x / 2, -_boxCollider.size.x / 2);
             float y = Random.Range(_boxCollider.size.y / 2, -_boxCollider.size.y / 2);

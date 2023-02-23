@@ -64,7 +64,7 @@ public abstract class WeaponBase : MonoBehaviour
     /// 
     public static void HitAction(Collider enemyCollider, int gunPower)
     {
-        var hitEnemy = enemyCollider.GetComponentInChildren<EnemyController>();
+        var hitEnemy = enemyCollider.GetComponentInChildren<EnemyBase>();
         hitEnemy.Damage(gunPower);
     }
 
