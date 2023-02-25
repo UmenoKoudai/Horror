@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class AutoDestroy : MonoBehaviour
 {
-    [SerializeField, Tooltip("オブジェクトを破壊するまでの時間")] float _destroyTime;
+    [SerializeField, Tooltip("オブジェクトを破壊するまでの時間(最低値)")] float _minTime;
+    [SerializeField, Tooltip("オブジェクトを破壊するまでの時間(最高値)")] float _maxTime;
     void Start()
     {
-        Destroy(gameObject, _destroyTime);
+        float destroyTime = Random.Range(_minTime, _maxTime + 1);
+        Destroy(gameObject, destroyTime);
     }
 }
