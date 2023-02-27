@@ -61,7 +61,6 @@ public class Zombi : EnemyBase
             {
 
                 var footSountPoint = GameObject.FindGameObjectsWithTag("FootSound");
-                //var soundPoint = footSountPoint.OrderByDescending(i => i).ToArray(); //←ここが問題何をソートするかわからないって言ってる？
                 float distance = Vector3.Distance(transform.position, footSountPoint[0].transform.position);
                 if (distance > _stopingDistance)
                 {

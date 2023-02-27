@@ -16,6 +16,7 @@ public class HandIK : MonoBehaviour
     void Start()
     {
         _anim = GetComponent<Animator>();
+        //_anim = GetComponentInParent<Animator>();
     }
     private void OnAnimatorIK(int layerIndex)
     {

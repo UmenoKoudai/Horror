@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpineIK : MonoBehaviour
 {
-    [SerializeField] Transform _target;
+    [SerializeField] Image _crosshair;
     [Tooltip("‚Ç‚ê‚­‚ç‚¢Œ©‚é‚©")]
     [SerializeField, Range(0f, 1f)] float _weight;
     [Tooltip("‘Ì‚ð‚Ç‚ê‚­‚ç‚¢Œü‚¯‚é‚©")]
@@ -24,13 +23,11 @@ public class SpineIK : MonoBehaviour
     }
     private void Update()
     {
-        cameraPosition = Camera.main.transform.position;
-        //scameraPosition.z = transform.position.z + 10;
-        cameraPosition = Camera.main.transform.TransformDirection(cameraPosition);
+        cameraPosition = Camera.main.ScreenToWorldPoint(_crosshair.transform.position);
     }
     private void OnAnimatorIK(int layerIndex)
     {
         _anim.SetLookAtWeight(_weight, _bodyWeight, _headWeight, _eyesWeight, _clampWeight);
-        _anim.SetLookAtPosition(cameraPosition);
+        _anim.SetLookAtPosition(-cameraPosition);
     }
 }

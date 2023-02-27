@@ -37,10 +37,10 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>
             Cursor.visible = false;
         }
 
-        //_anim.SetFloat("Speed", _rb.velocity.magnitude);
+        _anim.SetFloat("Speed", _rb.velocity.magnitude);
         //アイテムを取得するためのRayCast
         Ray ray = Camera.main.ScreenPointToRay(_crosshair.transform.position);
-        Debug.DrawRay(ray.origin, ray.direction);
+        //Debug.DrawRay(ray.origin, ray.direction);
         if (Physics.Raycast(ray, out RaycastHit hit, _rayCastRange, _actionObjectLayer))
         {
             //Rayが当たったら武器の名前を表示
@@ -53,7 +53,6 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>
                 IAction action = hitObject.GetComponent<IAction>();
                 _hitObject = hitObject;
                 action.Action();
-                //_weapons.WeaponChange(Array.FindIndex(_weapons, i => i.name == hit.collider.gameObject.name));
             }
         }
         //当たってないときはアイコンを非表示
