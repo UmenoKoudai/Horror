@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandIK : MonoBehaviour
+public class HandIK : SingletonMonoBehaviour<HandIK>
 {
     [SerializeField] GameObject _player;
     [SerializeField] Transform _leftTarget;
@@ -29,5 +29,17 @@ public class HandIK : MonoBehaviour
         _anim.SetIKRotation(AvatarIKGoal.LeftHand, _leftTarget.rotation);
         _anim.SetIKPositionWeight(AvatarIKGoal.LeftHand, _leftPositionWeight);
         _anim.SetIKRotationWeight(AvatarIKGoal.LeftHand, _leftRotationWeight);
+    }
+
+    public void PositionChange(string name)
+    {
+        _rightTarget = GameObject.Find($"{name}(P)").transform.GetChild(0);
+        _leftTarget = GameObject.Find($"{name}(P)").transform.GetChild(1);
+        Debug.Log($"{_rightTarget.gameObject.name} {_leftTarget.gameObject.name}");
+        GameObject obj = GameObject.Find($"{name}(P)");
+        for(int i = 0; i < obj.transform.childCount; i++)
+        {
+            Debug.Log(obj.transform.GetChild(i).gameObject.name);
+        }
     }
 }
