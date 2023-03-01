@@ -35,11 +35,5 @@ public class HandIK : SingletonMonoBehaviour<HandIK>
     {
         _rightTarget = GameObject.Find($"{name}(P)").transform.GetChild(0);
         _leftTarget = GameObject.Find($"{name}(P)").transform.GetChild(1);
-        Debug.Log($"{_rightTarget.gameObject.name} {_leftTarget.gameObject.name}");
-        GameObject obj = GameObject.Find($"{name}(P)");
-        for(int i = 0; i < obj.transform.childCount; i++)
-        {
-            Debug.Log(obj.transform.GetChild(i).gameObject.name);
-        }
     }
 }
