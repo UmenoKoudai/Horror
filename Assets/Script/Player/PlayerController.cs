@@ -37,7 +37,7 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>
             Cursor.visible = false;
         }
 
-        _anim.SetFloat("Speed", _rb.velocity.magnitude);
+        //_anim.SetFloat("Speed", _rb.velocity.magnitude);
         //アイテムを取得するためのRayCast
         Ray ray = Camera.main.ScreenPointToRay(_crosshair.transform.position);
         //Debug.DrawRay(ray.origin, ray.direction);
@@ -74,7 +74,7 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>
     {
         _h = Input.GetAxis("Horizontal");
         _v = Input.GetAxis("Vertical");
-        _anim.SetFloat("Speed", _rb.velocity.magnitude);
+        //_anim.SetFloat("Speed", _rb.velocity.magnitude);
         //Test1
         //視点移動のスクリプトカメラ方向に視線を移動する
         Vector3 cameraForward = Camera.main.transform.forward;
