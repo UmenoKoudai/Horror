@@ -21,6 +21,7 @@ public class Zombi : EnemyBase
     void Update()
     {
         _anim.SetFloat("MoveSpeed", _rb.velocity.magnitude);
+        //ゾンビのvoiceをランダムに再生
         int randomVoice = Random.Range(0, 4);
         switch(randomVoice)
         {
@@ -38,6 +39,7 @@ public class Zombi : EnemyBase
                 break;
 
         }
+        //HPがゼロになったらラグドールを生成しオブジェクトを削除する
         if(base.HP < 0)
         {
             GameObject ragDoll = (GameObject)Resources.Load("RagDollZombi");
@@ -79,6 +81,14 @@ public class Zombi : EnemyBase
                     _rb.velocity = dir * _moveSpeed;
                 }
             }
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            SceneSystem.Instance.SceneChange("GameOver");
         }
     }
 }
