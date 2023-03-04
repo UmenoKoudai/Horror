@@ -27,6 +27,7 @@ public abstract class WeaponBase : MonoBehaviour
         {
             if (Input.GetButton("Fire1"))
             {
+                AudioController.Instance.SePlay(SelectClip.Shoot, 0.1f);
                 _nowBulletCount--;
                 Action();
                 _timer = 0;
