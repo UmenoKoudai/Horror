@@ -31,6 +31,8 @@ public abstract class WeaponBase : MonoBehaviour
                 _nowBulletCount--;
                 Action();
                 _timer = 0;
+                GameObject sound = (GameObject)Resources.Load("FootSound");
+                Instantiate(sound, new Vector3(transform.position.x, 0f, transform.position.z), transform.rotation);
             }
         }
         if(Input.GetKeyDown(KeyCode.R) && !Input.GetButton("Fire1"))

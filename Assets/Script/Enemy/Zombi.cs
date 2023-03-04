@@ -21,6 +21,23 @@ public class Zombi : EnemyBase
     void Update()
     {
         _anim.SetFloat("MoveSpeed", _rb.velocity.magnitude);
+        int randomVoice = Random.Range(0, 4);
+        switch(randomVoice)
+        {
+            case 0:
+                AudioController.Instance.SePlay(SelectClip.EnemyVoice1, 4f);
+                break;
+            case 1:
+                AudioController.Instance.SePlay(SelectClip.EnemyVoice2, 4f);
+                break;
+            case 2:
+                AudioController.Instance.SePlay(SelectClip.EnemyVoice3, 4f);
+                break;
+            case 3:
+                AudioController.Instance.SePlay(SelectClip.EnemyVoice4, 4f);
+                break;
+
+        }
         if(base.HP < 0)
         {
             GameObject ragDoll = (GameObject)Resources.Load("RagDollZombi");

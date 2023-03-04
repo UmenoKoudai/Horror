@@ -12,10 +12,8 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>
     [SerializeField, Tooltip("切り替えるための武器を格納")] GameObject[] _weapons;
     [SerializeField, Tooltip("ダッシュ時の移動速度")] int _dushSpeed;
     [SerializeField, Tooltip("プレイヤーの移動速度")] int _defaultSpeed;
-    [SerializeField, Tooltip("足音のオブジェクト")] GameObject _footSoundObject;
     [SerializeField] CinemachineVirtualCamera _aimeScope;
     Rigidbody _rb;
-    Animator _anim;
     GameObject _hitObject;
     float _h;
     float _v;
@@ -25,7 +23,6 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        _anim = GetComponentInChildren<Animator>();
         Cursor.visible = false;   
     }
 
@@ -60,15 +57,6 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>
         {
             _getIcon.gameObject.SetActive(false);
         }
-        //if(Input.GetButtonDown("Fire2"))
-        //{
-        //    _aimeScope.Priority = 100;
-        //}
-        //if(Input.GetButtonUp("Fire2"))
-
-        //{
-        //    _aimeScope.Priority = 0;
-        //}
     }
     private void FixedUpdate()
     {
@@ -97,7 +85,8 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>
         {
             AudioController.Instance.SePlay(SelectClip.Run, 0.2f);
             _moveSpeed = _dushSpeed;
-            Instantiate(_footSoundObject, transform.position, transform.rotation);
+            GameObject sound = (GameObject)Resources.Load("FootSound");
+            Instantiate(sound, new Vector3(transform.position.x, 0f, transform.position.z), transform.rotation);
         }
         else
         {
@@ -108,7 +97,6 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>
             _moveSpeed = _defaultSpeed;
         }
         _rb.velocity = dirForward.normalized * _moveSpeed + _rb.velocity.y * Vector3.up;
-
         transform.forward = Camera.main.transform.forward;
     }
 }
