@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
@@ -10,9 +8,11 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     [SerializeField] Text _scoreText;
     [SerializeField]float _time;
     int _score;
+    int _keyItemCount;
     event Action _enemyDestroy;
 
     public  Action EnemyDestroy { get => _enemyDestroy; set => _enemyDestroy = value; }
+    public int KeyItemCount { get => _keyItemCount; set => _keyItemCount = value; }
 
     void Start()
     {

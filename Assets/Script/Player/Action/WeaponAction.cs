@@ -7,6 +7,5 @@ public class WeaponAction : MonoBehaviour,IAction
     {
         GameObject[] weapons = PlayerController.Instance.Weapons;
         PlayerController.Instance.Weapons.WeaponChange(Array.FindIndex(weapons, i => i.name == gameObject.name + "(P)"));
-       // HandIK.Instance.PositionChange(gameObject.name);
     }
 }

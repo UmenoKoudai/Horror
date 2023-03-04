@@ -108,5 +108,7 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>
             _moveSpeed = _defaultSpeed;
         }
         _rb.velocity = dirForward.normalized * _moveSpeed + _rb.velocity.y * Vector3.up;
+
+        transform.forward = Camera.main.transform.forward;
     }
 }

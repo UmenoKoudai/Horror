@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
-using System.Linq;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Zombi : EnemyBase
@@ -11,8 +7,6 @@ public class Zombi : EnemyBase
     [SerializeField, Tooltip("目的地にどれだけ近づくか")] float _stopingDistance;
     [SerializeField, Tooltip("エネミーの移動速度")] int _moveSpeed;
     [SerializeField, Tooltip("ゾンビが音に気付く距離")] float _discoverArea;
-    PlayerController _player;
-    GameManager _gameManager;
     Animator _anim;
     Rigidbody _rb;
     int _movePointCount;
@@ -23,7 +17,6 @@ public class Zombi : EnemyBase
     {
         _rb = GetComponent<Rigidbody>();
         _anim = GetComponent<Animator>();
-        _player = GameObject.FindObjectOfType<PlayerController>();
     }
     void Update()
     {
