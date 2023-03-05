@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using Cinemachine;
+using System.Linq;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : SingletonMonoBehaviour<PlayerController>
@@ -20,6 +21,7 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>
     int _moveSpeed = 10;
     public GameObject[] Weapons { get => _weapons; set => _weapons = value; }
     public GameObject HitObject { get=> _hitObject; }
+
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -28,7 +30,6 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>
 
     void Update()
     {
-        
         if (Cursor.visible)
         {
             Cursor.visible = false;
