@@ -8,6 +8,7 @@ public abstract class WeaponBase : MonoBehaviour
     [SerializeField]float _intarval;
     [SerializeField] int _maxBulletCount;
     [SerializeField] Text _bulletCounttext;
+    [SerializeField] GameObject _panel;
     float _timer;
     int _nowBulletCount;
 
@@ -15,30 +16,31 @@ public abstract class WeaponBase : MonoBehaviour
 
     public abstract void Action();
 
-    private void Start()
-    {
-        _nowBulletCount = _maxBulletCount;
-    }
     void Update()
     {
         _timer += Time.deltaTime;
-        _bulletCounttext.text = $"{_nowBulletCount}/{_maxBulletCount}";
-        if (_intarval < _timer && _nowBulletCount != 0)
+        _bulletCounttext.text = $"{_maxBulletCount - _nowBulletCount}/{_maxBulletCount}";
+        if (_intarval < _timer && _nowBulletCount != _maxBulletCount)
         {
             if (Input.GetButton("Fire1"))
             {
-                AudioController.Instance.SePlay(SelectClip.Shoot, 0.1f);
-                _nowBulletCount--;
+                AudioController.Instance.SePlay(SelectClip.Shoot, 0f);
                 Action();
                 _timer = 0;
                 GameObject sound = (GameObject)Resources.Load("FootSound");
                 Instantiate(sound, new Vector3(transform.position.x, 0f, transform.position.z), transform.rotation);
+                _panel.transform.GetChild(_nowBulletCount).gameObject.SetActive(false);
+                _nowBulletCount++;
             }
         }
         if(Input.GetKeyDown(KeyCode.R) && !Input.GetButton("Fire1"))
         {
             AudioController.Instance.SePlay(SelectClip.Reload, 0.5f);
-            _nowBulletCount = _maxBulletCount;
+            _nowBulletCount = 0;
+            for(int i = 0; i < _panel.transform.childCount; i++)
+            {
+                _panel.transform.GetChild(i).gameObject.SetActive(true);
+            }
         }
     }
     /// <summary>
